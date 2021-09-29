@@ -132,7 +132,9 @@ public class EmailController {
 //		crunchifyTimer.schedule(new CrunchifyRemoveOTP(), 120000, 60 * 1000L);
 		Customer cust = custService.getCustomerByEmail(request.getTo());
 		if (cust != null)
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Email Already Present.Use Different Email");
+			return new ResponseEntity<>(new ErrorResponse("Email Already Present.Use Different Email!", LocalDateTime.now()),
+					HttpStatus.NOT_FOUND);
+//			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Email Already Present.Use Different Email");
 		Random random = new Random();
 		int otp = random.nextInt(999999);
 		// EmailRequest request = new EmailRequest();
